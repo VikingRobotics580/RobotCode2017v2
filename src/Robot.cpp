@@ -49,6 +49,7 @@ class Robot : public IterativeRobot {
             // Here is where you would initialize all of your autonomous code
             log_info("Initializing Autonomous mode.");
             clock.Start();
+
         }
 
         void AutonomousPeriodic() {
@@ -59,8 +60,71 @@ class Robot : public IterativeRobot {
 
         	if (clock.Get() <= 5){
         		drive->MecanumDrive_Cartesian(0.25f, 0.0f, 0.0f, 0.0f);
+        	} else {
+        		drive->MecanumDrive_Cartesian(0.0f, 0.0f, 0.0f, 0.0f);
         	}
-            drive->MecanumDrive_Cartesian(0.0f, 0.0f, 0.0f, 0.0f);
+
+        	//Robot Starting Position Scenarios
+            //Scenario 1 - blue side, left gear
+            if(joy2->GetRawButton(0)) {
+
+            }
+
+            //Scenario 2 - blue side, middle gear
+            if(joy2->GetRawButton(1)) {
+
+            }
+
+            //Scenario 3 - blue side, right gear
+            if(joy2->GetRawButton(2)) {
+
+            }
+
+            //Scenario 4 - blue side, left shoot
+            if(joy2->GetRawButton(3)) {
+
+            }
+
+            //Scenario 5 - blue side, middle shoot
+            if(joy2->GetRawButton(4)) {
+
+            }
+
+            //Scenario 6 - blue side, right shoot
+            if(joy2->GetRawButton(5)) {
+
+            }
+
+            //Scenario 7 - red side, left gear
+            if(joy2->GetRawButton(6)) {
+
+            }
+
+            //Scenario 8 - red side, middle gear
+            if(joy2->GetRawButton(7)) {
+
+            }
+
+            //Scenario 9 - red side, right gear
+            if(joy2->GetRawButton(8)) {
+
+            }
+
+            //Scenario 10 - red side, left shoot
+            if(joy2->GetRawButton(9)) {
+
+            }
+
+            //Scenario 11 - red side, middle shoot
+            if(joy2->GetRawButton(10)) {
+
+            }
+
+            //Scenario 12 - red side, right shoot
+            if(joy2->GetRawButton(11)) {
+
+            }
+
         }
 
         void TeleopInit() {
@@ -90,7 +154,7 @@ class Robot : public IterativeRobot {
             //Trigger
             if(joy2 ->GetRawButton(1)){ // trigger on the joystick/adruino will release the balls into the motor.
             	ballReleaser.Set(0.5);
-            } else{
+            } else {
             	ballReleaser.Set(0);
             }
             //Shooter
