@@ -31,7 +31,7 @@ class Robot : public IterativeRobot {
             // You should only initialize value here. Try not to have any other
             //  executable code here.
             joy = new Joystick(0);  //Drive Joystick
-            joy2 = new Joystick(1); //Arduino "Joystick"
+            joy2 = new Joystick(1); //Shooter Joystick
             drive = NULL;
 
         }
@@ -56,47 +56,48 @@ class Robot : public IterativeRobot {
             // It is important to note that all code here will run as though
             //  autonomous mode is endless, so you have to carefully time how
             //  long your code will run for.
+            if (clock.Get() <= 2.2){
+                drive->MecanumDrive_Cartesian(0.0f, -0.5f, 0.0f, 0.0f); //-y Axis is FORWARD
 
-        	if (clock.Get() <= 5){
-        		drive->MecanumDrive_Cartesian(0.25f, 0.0f, 0.0f, 0.0f);
-        	}
-            drive->MecanumDrive_Cartesian(0.0f, 0.0f, 0.0f, 0.0f);
+            } else {
+            	clock.Stop();
+                drive->MecanumDrive_Cartesian(0.0f, 0.0f, 0.0f, 0.0f);
+
+            };
+
         }
 
         void TeleopInit() {
             log_info("Initializing Teleop mode.\n");
-            // We don't have anything to initialize here.
+            clock.Reset();
         }
 
         void TeleopPeriodic() {
 
+            //Drive Train
         	// During teleop we want to pass Mecanum Drive the joystick axes.
             // void MecanumDrive_Cartesian(float x, float y, float rotation, float gyro)
-            // Note that these axes may be reversed, so you may need to switch
-            //  the GetX and GetY functions
             drive->MecanumDrive_Cartesian(joy->GetX(), joy->GetY(),
                                           joy->GetTwist(), 0.0f);
 
-
             //Gears 1 and 2
-            if(joy2->GetRawButton(10)) { // button 11 on the joystick will initiate the gear stopper
+            if(joy2->GetRawButton(10)) { // button 10 on the joystick will initiate the gear stopper
             	gear1.Set(1);
             	gear2.Set(0);
             } else {
-            	gear1.Set(0.25);
-            	gear2.Set(0.75);
+            	gear1.Set(0.45);
+            	gear2.Set(0.55);
             }
 
             //Trigger
             if(joy2 ->GetRawButton(1)){ // trigger on the joystick/adruino will release the balls into the motor.
-            	ballReleaser.Set(0.5);
-            } else{
             	ballReleaser.Set(0);
+            } else{
+            	ballReleaser.Set(0.5);
             }
             //Shooter
             if(joy2->GetRawButton(2)) { // starts up the motor when button 12 is pressed
-            	shooter.Set(((joy->GetThrottle()+1)/4)+0.25); //This puts power between 50% and 100%
-            	//IMPORTANT NOTE: THIS HAS BEEN SET UP FOR ARDUINO
+            	shooter.Set(((((joy2->GetThrottle())*-1)+1)/4)+0.25); //This puts power between 50% and 100%
         	} else {
             	shooter.Set(0.0f); //Aka: do nothing
         	}
