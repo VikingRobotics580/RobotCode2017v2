@@ -1,5 +1,5 @@
 //2017 RoboCode v2 Source Code
-#include <WPILib.h> // Worchester Polytechnic Institude (WPI) Library for Robot classes,
+#include <WPILib.h> // Worcester Polytechnic Institute (WPI) Library for Robot classes
 
 #include <stdio.h> //We use some of this for logging purposes.
 
@@ -61,7 +61,6 @@ class Robot : public IterativeRobot {
             //  long your code will run for.
             if (clock.Get() <= 2.2){
                 drive->MecanumDrive_Cartesian(0.0f, -0.5f, 0.0f, 0.0f); //-y Axis is FORWARD
-
             } else {
             	clock.Stop();
                 drive->MecanumDrive_Cartesian(0.0f, 0.0f, 0.0f, 0.0f);
@@ -76,7 +75,6 @@ class Robot : public IterativeRobot {
         }
 
         void TeleopPeriodic() {
-
             //Drive Train
         	// During teleop we want to pass Mecanum Drive the joystick axes.
             // void MecanumDrive_Cartesian(float x, float y, float rotation, float gyro)
@@ -85,15 +83,15 @@ class Robot : public IterativeRobot {
 
             //Gears 1 and 2
             if(joy2->GetRawButton(10)) { // button 10 on the joystick will initiate the gear stopper
-            	gear1.Set(1); //previous value: 1
-            	gear2.Set(0); //previous value: 0
+            	gear1.Set(1);
+            	gear2.Set(0);
             } else {
-            	gear1.Set(0.45); //previous value: 0.45
-            	gear2.Set(0.55); //previous value: 0.55
+            	gear1.Set(0.45);
+            	gear2.Set(0.55);
             }
 
             //Trigger
-            if(joy2 ->GetRawButton(1)){ // trigger on the joystick/adruino will release the balls into the motor.
+            if(joy2 ->GetRawButton(1)){ // trigger on the joystick/arduino will release the balls into the motor.
             	ballReleaser.Set(0);
             } else{
             	ballReleaser.Set(0.5);
@@ -102,14 +100,14 @@ class Robot : public IterativeRobot {
             if(joy2->GetRawButton(2)) { // starts up the motor when button 12 is pressed
             	shooter.Set(((((joy2->GetThrottle())*-1)+1)/4)+0.25); //This puts power between 50% and 100%
         	} else {
-            	shooter.Set(0.0f); //Aka: do nothing
+            	shooter.Set(0.0f); //AKA: do nothing
         	}
 
             //Agitator
             if(joy2->GetRawButton(1)) {
-            	agitator.Set(-1.0); //Turns on
+            	agitator.Set(-1.0); //Turns on agitator
             } else {
-            	agitator.Set(0.0); //Turns off
+            	agitator.Set(0.0); //Turns off agitator
             }
         }
 
@@ -131,7 +129,6 @@ class Robot : public IterativeRobot {
         //  run during the competitions.
 
     private:
-
         Joystick* joy;       //Drive Joystick
         Joystick* joy2;      //Arduino "Joystick"
         Talon frontLeft;     //Front-left Mecanum wheel
