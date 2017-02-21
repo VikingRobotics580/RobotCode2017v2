@@ -1,5 +1,5 @@
 //2017 RoboCode v2 Source Code
-#include <WPILib.h> // Worchester Polytechnice Institude (WPI) Library for Robot classes,
+#include <WPILib.h> // Worchester Polytechnic Institude (WPI) Library for Robot classes,
 
 #include <stdio.h> //We use some of this for logging purposes.
 
