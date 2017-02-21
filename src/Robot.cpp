@@ -1,7 +1,9 @@
-#include <WPILib.h>
-#include <stdio.h>
+//2017 RoboCode v2 Source Code
+#include <WPILib.h> // Worchester Polytechnice Institude (WPI) Library for Robot classes,
 
-#include <logging.h>
+#include <stdio.h> //We use some of this for logging purposes.
+
+#include <logging.h> //This is where we have our logging code
 
 /*  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *
  * The Robot Load Order, after Calling START_ROBOT_CLASS, is as follows:       *
@@ -17,6 +19,7 @@ class Robot : public IterativeRobot {
 	Robot():
             IterativeRobot(), //constructor
             //These constructions are given the number of the PWM port on the roboRio
+			//Variables for objects are defined at the bottom in the PRIVATE modifier.
 			frontLeft(0),  	//port 0
 			backLeft(1),   	//port 1
 			frontRight(2), 	//port 2
@@ -48,7 +51,7 @@ class Robot : public IterativeRobot {
         void AutonomousInit() {
             // Here is where you would initialize all of your autonomous code
             log_info("Initializing Autonomous mode.");
-            clock.Start();
+            clock.Start(); //Starts the timer from 0 seconds
         }
 
         void AutonomousPeriodic() {
@@ -69,7 +72,7 @@ class Robot : public IterativeRobot {
 
         void TeleopInit() {
             log_info("Initializing Teleop mode.\n");
-            clock.Reset();
+            clock.Reset(); //This is so we can reset Autonomous
         }
 
         void TeleopPeriodic() {
@@ -82,11 +85,11 @@ class Robot : public IterativeRobot {
 
             //Gears 1 and 2
             if(joy2->GetRawButton(10)) { // button 10 on the joystick will initiate the gear stopper
-            	gear1.Set(1);
-            	gear2.Set(0);
+            	gear1.Set(1); //previous value: 1
+            	gear2.Set(0); //previous value: 0
             } else {
-            	gear1.Set(0.45);
-            	gear2.Set(0.55);
+            	gear1.Set(0.45); //previous value: 0.45
+            	gear2.Set(0.55); //previous value: 0.55
             }
 
             //Trigger
@@ -102,6 +105,12 @@ class Robot : public IterativeRobot {
             	shooter.Set(0.0f); //Aka: do nothing
         	}
 
+            //Agitator
+            if(joy2->GetRawButton(1)) {
+            	agitator.Set(-1.0); //Turns on
+            } else {
+            	agitator.Set(0.0); //Turns off
+            }
         }
 
         void DisabledInit() {
@@ -133,9 +142,9 @@ class Robot : public IterativeRobot {
         RobotDrive* drive;   //Drive Train
         Servo gear1;         //Gear 1
         Servo gear2;         //Gear 2
-        Servo ballReleaser;           //hopper servo that releases ball when pressed.
-        Talon agitator;		 //
-        Timer clock;
+        Servo ballReleaser;  //hopper servo that releases ball when pressed.
+        Talon agitator;		 //The ball agitator to make sure the balls don't get jammed
+        Timer clock;         //Creates the clock object used for getting time
 };
 
 START_ROBOT_CLASS(Robot);
